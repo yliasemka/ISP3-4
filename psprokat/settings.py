@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 import os
+import logging
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +30,10 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG',True))
 
 ALLOWED_HOSTS = ['*']
 
-
 CART_SESSION_ID = 'cart'
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -163,3 +167,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
+
+

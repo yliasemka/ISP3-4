@@ -19,9 +19,9 @@ def cart_add(request, slug):
             cart.add(product=product,
                      quantity=cd['quantity'],
                      update_quantity=cd['update'])
-        return redirect('cart:cart_detail')
     else:
-        return HttpResponseRedirect('/login/')
+        return redirect('authentication:login')
+    return redirect('cart:cart_detail')
 
 
 def cart_remove(request, slug):
