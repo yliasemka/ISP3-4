@@ -22,6 +22,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('mainapp.api.urls')),
+    path('authentication/', include(('authentication.urls', 'authentication'), namespace='authentication')),
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('orders/', include(('orders.urls', 'orders'), namespace='orders')),
     path('', include(('mainapp.urls', 'mainapp'), namespace='mainapp'))

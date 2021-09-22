@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
+    'authentication',
     'cart',
     'orders',
     'crispy_forms',
@@ -88,12 +90,12 @@ WSGI_APPLICATION = 'psprokat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'istore_db',
-        'USER': 'istoreuser',
-        'PASSWORD': 'istore',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.environ.get('SQL_ENGINE','django.db.backends.postgresql_psycopg2'),
+        'NAME': os.environ.get('SQL_DB','istore_db'),
+        'USER': os.environ.get('SQL_USER','istoreuser'),
+        'PASSWORD': os.environ.get('SQL_PASSWORD','istore'),
+        'HOST': os.environ.get('SQL_HOST','localhost'),
+        'PORT': os.environ.get('SQL_PORT','5432'),
     }
 }
 
@@ -130,15 +132,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = "psprokat.django@gmail.com"
+EMAIL_HOST_USER = "psprokat.django@gmail.com"
+EMAIL_HOST_PASSWORD = "psprokat2"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-import dj_database_url
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -153,5 +160,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
